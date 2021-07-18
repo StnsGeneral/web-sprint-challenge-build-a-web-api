@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  if (!req.body.name || !req.body.description) {
+  if (!req.body.name || !req.body.description || !req.body.completed) {
     res.status(400).json({ message: 'Name and description required' });
   } else {
     Projects.update(req.params.id, req.body)
