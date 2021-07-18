@@ -7,7 +7,9 @@ const server = express();
 // Do NOT `server.listen()` inside this file!
 const projectsRouter = require('./projects/projects-router');
 const actionsRouter = require('./actions/actions-router');
+const { logger } = require('./actions/actions-middlware');
 
+server.use('/', logger);
 server.use('/api/projects', projectsRouter);
 server.use('/api/actions', actionsRouter);
 

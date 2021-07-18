@@ -69,7 +69,10 @@ router.put('/:id', (req, res) => {
     !req.body.completed ||
     !req.body.project_id
   ) {
-    res.status(400).json({ message: 'Note and description are required' });
+    res.status(400).json({
+      message:
+        'Notes, description, completed status, and project id are required',
+    });
   } else {
     Actions.update(req.params.id, req.body)
       .then((updatedProject) => {

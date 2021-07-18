@@ -2,6 +2,7 @@
 const express = require('express');
 
 const Projects = require('./projects-model');
+const { idChecker } = require('./projects-middleware');
 
 const router = express.Router();
 
@@ -21,20 +22,26 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
-  Projects.get(req.params.id)
-    .then((project) => {
-      if (!project) {
-        res
-          .status(404)
-          .json({ message: 'Project with the specified id does not exist' });
-      } else {
-        res.status(200).json(project);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: 'Get id error' });
-    });
+// router.get('/:id', (req, res) => {
+//   Projects.get(req.params.id)
+//     .then((project) => {
+//       if (!project) {
+//         res
+//           .status(404)
+//           .json({ message: 'Project with the specified id does not exist' });
+//       } else {
+//         res.status(200).json(project);
+//       }
+//     })
+//     .catch((err) => {
+//       res.status(500).json({ message: 'Get id error' });
+//     });
+// });
+
+router.get('/:id', idChecker, (req, res) => {
+  const { id } = req.params.id;
+  Projects.get(id);
+  res.status(200).json(req.project);
 });
 
 router.post('/', (req, res) => {
